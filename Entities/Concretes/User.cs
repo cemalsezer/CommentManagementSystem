@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Entities.Concretes
 {
-    public class User
+    public class User //Entity<Guid>, IUser
     {
-        public int ID { get; set; } 
-        public string UserName { get; set; } 
-        public string Email { get; set; } 
-        public string Password { get; set; } 
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public byte[] PasswordHash { get; set; } 
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Assignment> Assignments { get; set; }
     }
 }

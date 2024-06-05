@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace Entities.Concretes
 {
-    public class Comment
+    public class Comment //Entity<Guid>
     {
+
+        public Guid AssignmentId { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public string Content { get; set; }
+
+        public DateTime CommentDate { get; set; }
+
+        public Assignment Assignment { get; set; }
+
+        public User User { get; set; }
     }
 }
