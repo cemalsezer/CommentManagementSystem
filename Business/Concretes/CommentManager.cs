@@ -1,7 +1,13 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
+using Business.Dtos.Assignment.Requests;
+using Business.Dtos.Assignment.Responses;
 using Business.Dtos.Comment.Requests;
 using Business.Dtos.Comment.Responses;
 using Core.DataAccess.Paging;
+using DataAccess.Abstracts;
+using DataAccess.Concretes;
+using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,29 +18,42 @@ namespace Business.Concretes
 {
     public class CommentManager : ICommentService
     {
-        public Task<CreatedCommentResponse> AddAsync(CreateCommentRequest createCommentRequest)
+        private ICommentDal _commentDal;
+        private IMapper _mapper;
+
+        public CommentManager(ICommentDal commentDal, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _commentDal = commentDal;
+            _mapper = mapper;
+        }
+        public async Task<CreatedCommentResponse> AddAsync(CreateCommentRequest createCommentRequest)
+        {
+            Comment comment = _mapper.Map<Comment>(createCommentRequest);
+            comment.Id = Guid.NewGuid();
+            Comment createdComment = await _commentDal.AddAsync(comment);
+            return _mapper.Map<CreatedCommentResponse>(createCommentRequest);
         }
 
-        public Task<DeletedCommentResponse> DeleteAsync(Guid commentId)
+        public async Task<DeletedCommentResponse> DeleteAsync(Guid commentId)
         {
-            throw new NotImplementedException();
+            Comment comment = await _commentDal.GetAsync(u => u.Id == commentId);
+            var deletedComment = await _commentDal.DeleteAsync(comment);
+            DeletedCommentResponse deletedCommentResponse = _mapper.Map<DeletedCommentResponse>(deletedComment);
+            return deletedCommentResponse;
         }
 
-        public Task<GetCommentResponse> GetByIdAsync(Guid commentId)
+        public async Task<GetCommentResponse> GetByIdAsync(Guid commentId)
         {
-            throw new NotImplementedException();
+            Comment comment = await _commentDal.GetAsync(u => u.Id == commentId);
+            return _mapper.Map<GetCommentResponse>(comment);
         }
 
-        public Task<Paginate<GetListCommentResponse>> GetListAsync()
+        public async Task<Paginate<GetListCommentResponse>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var commenttList = await _commentDal.GetListAsync();
+            return _mapper.Map<Paginate<GetListCommentResponse>>(commenttList);
         }
 
-        public Task<Paginate<GetListCommentResponse>> GetListByUserIdAsync(Guid commentId)
-        {
-            throw new NotImplementedException();
-        }
+    
     }
 }

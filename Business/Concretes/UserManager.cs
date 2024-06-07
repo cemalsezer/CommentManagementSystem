@@ -1,8 +1,14 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
+using Business.Dtos.OperationClaim.Responses;
 using Business.Dtos.User.Requests;
 using Business.Dtos.User.Responses;
 using Core.DataAccess.Paging;
 using Core.Entities.Abstract;
+using DataAccess.Abstracts;
+using DataAccess.Concretes;
+using Entities.Concretes;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,34 +19,52 @@ namespace Business.Concretes
 {
     public class UserManager : IUserService
     {
-        public Task<CreatedUserResponse> AddAsync(CreateUserRequest createUserRequest)
+        private IUserDal _userDal;
+        private IMapper _mapper;
+
+        public UserManager(IUserDal userDal, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _userDal = userDal;
+            _mapper = mapper;
+            
         }
 
-        public Task<DeletedUserResponse> DeleteAsync(Guid userId)
+        public async Task<CreatedUserResponse> AddAsync(CreateUserRequest createUserRequest)
         {
-            throw new NotImplementedException();
+            User user = _mapper.Map<User>(createUserRequest);
+            user.Id = Guid.NewGuid();
+            User createdUser = await _userDal.AddAsync(user);
+            return _mapper.Map<CreatedUserResponse>(createdUser);
         }
 
-        public Task<GetByIdUserResponse> GetByIdAsync(Guid userId)
+        public async Task<DeletedUserResponse> DeleteAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            User user = await _userDal.GetAsync(u=> u.Id == userId);
+            var deletedUser = await _userDal.DeleteAsync(user);
+            DeletedUserResponse deletedUserResponse = _mapper.Map<DeletedUserResponse>(deletedUser);
+            return deletedUserResponse;
         }
 
-        public List<IOperationClaim> GetClaims(IUser user)
+        public async Task<GetByIdUserResponse> GetByIdAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            User user = await _userDal.GetAsync(u=>u.Id == userId);
+            return _mapper.Map<GetByIdUserResponse>(user);
+
         }
 
-        public Task<Paginate<GetListUserResponse>> GetListAsync()
+
+        public async Task<Paginate<GetListUserResponse>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var data = await _userDal.GetListAsync();
+            return _mapper.Map<Paginate<GetListUserResponse>>(data);
         }
 
-        public Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest)
+        public async Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest)
         {
-            throw new NotImplementedException();
+            User user = _mapper.Map<User>(updateUserRequest);
+            var updatedUser = await _userDal.UpdateAsync(user);
+            UpdatedUserResponse updatedUserResponse = _mapper.Map<UpdatedUserResponse>(updatedUser);
+            return updatedUserResponse;
         }
     }
 }

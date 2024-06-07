@@ -10,6 +10,6 @@ namespace Business.Abstracts
         Task<Paginate<GetListOperationClaimResponse>> GetListAsync();
         Task<DeletedOperationClaimResponse> DeleteAsync(Guid operationClaimId);
         Task<UpdatedOperationClaimResponse> UpdateAsync(UpdateOperationClaimRequest updateOperationClaimRequest);
-        Task<GetOperationClaimResponse> GetByIdAsync(Guid operationClaimId);
+        Task<GetOperationClaimResponse> GetAsync(Guid operationClaimId);
     }
 }

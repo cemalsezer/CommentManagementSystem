@@ -12,6 +12,5 @@ namespace Business.Abstracts
         Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest);
         Task<DeletedUserResponse> DeleteAsync(Guid userId);
         Task<GetByIdUserResponse> GetByIdAsync(Guid userId);
-        List<IOperationClaim> GetClaims(IUser user);
     }
 }

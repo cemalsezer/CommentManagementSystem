@@ -14,7 +14,6 @@ namespace Business.Abstracts
         Task<CreatedCommentResponse> AddAsync(CreateCommentRequest createCommentRequest);
         Task<Paginate<GetListCommentResponse>> GetListAsync();
         Task<DeletedCommentResponse> DeleteAsync(Guid commentId);
-        Task<Paginate<GetListCommentResponse>> GetListByUserIdAsync(Guid commentId);
         Task<GetCommentResponse> GetByIdAsync(Guid commentId);
     }
 }

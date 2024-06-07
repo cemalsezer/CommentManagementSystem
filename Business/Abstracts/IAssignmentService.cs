@@ -17,7 +17,6 @@ namespace Business.Abstracts
         Task<CreatedAssignmentResponse> AddAsync(CreateAssignmentRequest createAssignmentRequest);
         Task<Paginate<GetListAssignmentResponse>> GetListAsync();
         Task<DeletedAssignmentResponse> DeleteAsync(Guid  assignmentId);
-        Task<Paginate<GetListAssignmentResponse>> GetListByUserIdAsync(Guid assignmentId);
         Task<GetAssignmentResponse> GetByIdAsync(Guid assignmentId);
     }
 }

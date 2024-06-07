@@ -1,7 +1,13 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
 using Business.Dtos.Assignment.Requests;
 using Business.Dtos.Assignment.Responses;
+using Business.Dtos.User.Requests;
+using Business.Dtos.User.Responses;
 using Core.DataAccess.Paging;
+using DataAccess.Abstracts;
+using DataAccess.Concretes;
+using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,29 +18,42 @@ namespace Business.Concretes
 {
     public class AssignmentManager : IAssignmentService
     {
-        public Task<CreatedAssignmentResponse> AddAsync(CreateAssignmentRequest createAssignmentRequest)
+        private IAssignmentDal _assignmentDal;
+        private IMapper _mapper;
+
+        public AssignmentManager(IAssignmentDal assignmentDal, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _assignmentDal = assignmentDal;
+            _mapper = mapper;
+        }
+        public async Task<CreatedAssignmentResponse> AddAsync(CreateAssignmentRequest createAssignmentRequest)
+        {
+            Assignment assignment = _mapper.Map<Assignment>(createAssignmentRequest);
+            assignment.Id = Guid.NewGuid();
+            Assignment createdAssignment = await _assignmentDal.AddAsync(assignment);
+            return _mapper.Map<CreatedAssignmentResponse>(createdAssignment);
         }
 
-        public Task<DeletedAssignmentResponse> DeleteAsync(Guid assignmentId)
+        public async Task<DeletedAssignmentResponse> DeleteAsync(Guid assignmentId)
         {
-            throw new NotImplementedException();
+            Assignment assignment = await _assignmentDal.GetAsync(u => u.Id == assignmentId);
+            var deletedAssignmet = await _assignmentDal.DeleteAsync(assignment);
+            DeletedAssignmentResponse deletedAssignmentResponse = _mapper.Map<DeletedAssignmentResponse>(deletedAssignmet);
+            return deletedAssignmentResponse;
         }
 
-        public Task<GetAssignmentResponse> GetByIdAsync(Guid assignmentId)
+        public async Task<GetAssignmentResponse> GetByIdAsync(Guid assignmentId)
         {
-            throw new NotImplementedException();
+            Assignment assignment = await _assignmentDal.GetAsync(u => u.Id == assignmentId);
+            return _mapper.Map<GetAssignmentResponse>(assignment);
         }
 
-        public Task<Paginate<GetListAssignmentResponse>> GetListAsync()
+        public async Task<Paginate<GetListAssignmentResponse>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var assignmentList = await _assignmentDal.GetListAsync();
+            return _mapper.Map<Paginate<GetListAssignmentResponse>>(assignmentList);
         }
 
-        public Task<Paginate<GetListAssignmentResponse>> GetListByUserIdAsync(Guid assignmentId)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

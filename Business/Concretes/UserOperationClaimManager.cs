@@ -1,7 +1,11 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
 using Business.Dtos.UserOperationClaim.Requests;
 using Business.Dtos.UserOperationClaim.Responses;
 using Core.DataAccess.Paging;
+using DataAccess.Abstracts;
+using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,24 +16,39 @@ namespace Business.Concretes
 {
     public class UserOperationClaimManager : IUserOperationClaimService
     {
-        public Task<CreatedUserOperationClaimResponse> AddAsync(CreateUserOperationClaimRequest createUserOperationClaimRequest)
+        IUserOperationClaimDal _userOperationClaimDal;
+        IMapper _mapper;
+        public UserOperationClaimManager(IUserOperationClaimDal userOperationClaimDal, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _userOperationClaimDal = userOperationClaimDal;
+            _mapper = mapper;
+        }
+        public async Task<CreatedUserOperationClaimResponse> AddAsync(CreateUserOperationClaimRequest createUserOperationClaimRequest)
+        {
+            UserOperationClaim userOperationClaim = _mapper.Map<UserOperationClaim>(createUserOperationClaimRequest);
+            var createdUserOperationClaim = await _userOperationClaimDal.AddAsync(userOperationClaim);
+            CreatedUserOperationClaimResponse createdUserOperationClaimResponse = _mapper.Map<CreatedUserOperationClaimResponse>(createdUserOperationClaim);
+            return createdUserOperationClaimResponse;
         }
 
-        public Task<DeletedUserOperationClaimResponse> DeleteAsync(DeleteUserOperationClaimRequest deleteUserOperationClaimRequest)
+        public async Task<DeletedUserOperationClaimResponse> DeleteAsync(DeleteUserOperationClaimRequest deleteUserOperationClaimRequest)
         {
-            throw new NotImplementedException();
+            UserOperationClaim userOperationClaim = await _userOperationClaimDal.GetAsync(uoc => uoc.UserId == deleteUserOperationClaimRequest.UserId && uoc.OperationClaimId==deleteUserOperationClaimRequest.OperationClaimId);
+            var deletedUserOperationClaim = await _userOperationClaimDal.DeleteAsync(userOperationClaim);
+            DeletedUserOperationClaimResponse deletedUserOperationClaimResponse = _mapper.Map<DeletedUserOperationClaimResponse>(deletedUserOperationClaim);
+            return deletedUserOperationClaimResponse;         
         }
 
-        public Task<Paginate<GetListUserOperationClaimResponse>> GetListAsync()
+        public async Task<Paginate<GetListUserOperationClaimResponse>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var userOperationClaim = await  _userOperationClaimDal.GetListAsync(include: u => u.Include(u => u.User).Include(c => c.OperationClaim));
+            return _mapper.Map<Paginate<GetListUserOperationClaimResponse>>(userOperationClaim);
         }
 
-        public Task<Paginate<GetListUserOperationClaimResponse>> GetListByUserIdAsync(Guid userId)
+        public async Task<Paginate<GetListUserOperationClaimResponse>> GetListByUserIdAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var result = await _userOperationClaimDal.GetListAsync(uoc => uoc.UserId == userId);
+            return _mapper.Map<Paginate<GetListUserOperationClaimResponse>>(result);
         }
     }
 }
