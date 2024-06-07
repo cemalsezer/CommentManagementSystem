@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace Entities.Concretes
 {
-    public class Assignment : Entity<Guid>
+    public class UserOperationClaim : Entity<Guid>
     {
         public Guid UserId { get; set; }
-        public string Title { get; set; } 
-        public string Description { get; set; } 
-        public DateTime CreationDate { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public Guid OperationClaimId { get; set; }
         public User User { get; set; }
-
-
+        public OperationClaim OperationClaim { get; set; }
     }
 }
