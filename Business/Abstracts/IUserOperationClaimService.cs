@@ -6,9 +6,9 @@ namespace Business.Abstracts
 {
     public interface IUserOperationClaimService
     {
-        Task<CreatedUserOperationClaimResponse> AddAsync(CreateUserOperationClaimRequest createUserOperationClaimRequest);
+        Task<CreatedUserOperationClaimResponse> AddAsync(CreateUserAssignmentRequest createUserOperationClaimRequest);
         Task<Paginate<GetListUserOperationClaimResponse>> GetListAsync();
-        Task<DeletedUserOperationClaimResponse> DeleteAsync(DeleteUserOperationClaimRequest deleteUserOperationClaimRequest);
+        Task<DeletedUserOperationClaimResponse> DeleteAsync(DeleteUserAssignmentRequest deleteUserOperationClaimRequest);
         Task<Paginate<GetListUserOperationClaimResponse>> GetListByUserIdAsync(Guid userId);
     }
 }

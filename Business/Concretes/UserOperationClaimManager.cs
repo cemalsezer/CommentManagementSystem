@@ -23,7 +23,7 @@ namespace Business.Concretes
             _userOperationClaimDal = userOperationClaimDal;
             _mapper = mapper;
         }
-        public async Task<CreatedUserOperationClaimResponse> AddAsync(CreateUserOperationClaimRequest createUserOperationClaimRequest)
+        public async Task<CreatedUserOperationClaimResponse> AddAsync(CreateUserAssignmentRequest createUserOperationClaimRequest)
         {
             UserOperationClaim userOperationClaim = _mapper.Map<UserOperationClaim>(createUserOperationClaimRequest);
             var createdUserOperationClaim = await _userOperationClaimDal.AddAsync(userOperationClaim);
@@ -31,7 +31,7 @@ namespace Business.Concretes
             return createdUserOperationClaimResponse;
         }
 
-        public async Task<DeletedUserOperationClaimResponse> DeleteAsync(DeleteUserOperationClaimRequest deleteUserOperationClaimRequest)
+        public async Task<DeletedUserOperationClaimResponse> DeleteAsync(DeleteUserAssignmentRequest deleteUserOperationClaimRequest)
         {
             UserOperationClaim userOperationClaim = await _userOperationClaimDal.GetAsync(uoc => uoc.UserId == deleteUserOperationClaimRequest.UserId && uoc.OperationClaimId==deleteUserOperationClaimRequest.OperationClaimId);
             var deletedUserOperationClaim = await _userOperationClaimDal.DeleteAsync(userOperationClaim);
