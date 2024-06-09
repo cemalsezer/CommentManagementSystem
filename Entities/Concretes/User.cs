@@ -16,8 +16,8 @@ namespace Entities.Concretes
         public string Email { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; } 
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Assignment> Assignments { get; set; }
+        public ICollection<UserAssignment> UserAssignments { get; set; }
+
         public ICollection<UserOperationClaim> UserOperationClaims{ get; set; }
     }
 }
