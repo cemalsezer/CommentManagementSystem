@@ -22,6 +22,7 @@ namespace DataAccess
             services.AddScoped<IUserOperationClaimDal, EfUserOperationClaimDal>();
             services.AddScoped<IAssignmentDal, EfAssignmentDal>();
             services.AddScoped<ICommentDal, EfCommentDal>();
+            services.AddScoped<IUserAssignmentDal, EfUserAssignmentDal>();
 
             return services;
         }

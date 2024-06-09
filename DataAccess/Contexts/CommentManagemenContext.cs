@@ -18,6 +18,7 @@ namespace DataAccess.Contexts
         public DbSet<Assignment> Assignments{ get; set; }
         public DbSet<OperationClaim> OperationClaims{ get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims{ get; set; }
+        public DbSet<UserAssignment> UserAssignments { get; set; }
         public CommentManagemenContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
             Configuration = configuration;
