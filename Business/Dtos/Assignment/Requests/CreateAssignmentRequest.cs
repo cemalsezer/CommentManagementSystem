@@ -8,7 +8,6 @@ namespace Business.Dtos.Assignment.Requests
 {
     public class CreateAssignmentRequest
     {
-        public Guid UserId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }

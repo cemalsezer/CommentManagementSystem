@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Dtos.UserOperationClaim.Requests
+namespace Business.Dtos.UserAssignment.Requests
 {
-    public class GetUserAssignmentRequest
+    public class CreateUserAssignmentRequest
     {
         public Guid UserId { get; set; }
-        public Guid OperationId { get; set; }
+        public Guid AssignmentId { get; set; }
     }
 }

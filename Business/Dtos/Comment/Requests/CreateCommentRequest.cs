@@ -10,8 +10,6 @@ namespace Business.Dtos.Comment.Requests
     {
         public Guid AssignmentId { get; set; }
 
-        public Guid UserId { get; set; }
-
         public string Content { get; set; }
 
         public DateTime CommentDate { get; set; }
