@@ -2,6 +2,7 @@
 using Business.Dtos.User.Responses;
 using Core.DataAccess.Paging;
 using Core.Entities.Abstract;
+using Entities.Concretes;
 
 namespace Business.Abstracts
 {
@@ -12,5 +13,8 @@ namespace Business.Abstracts
         Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest);
         Task<DeletedUserResponse> DeleteAsync(Guid userId);
         Task<GetByIdUserResponse> GetByIdAsync(Guid userId);
+        Task<User> GetByMailAsync(string mail,bool withDeleted);
+        Task<GetUserResponse> GetUserByMailAsync(string mail);
+        List<IOperationClaim> GetClaims(IUser user);
     }
 }

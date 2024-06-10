@@ -1,5 +1,7 @@
 ﻿using Business.Dtos.OperationClaim.Requests;
 using Business.Dtos.OperationClaim.Responses;
+using Business.Dtos.UserOperationClaim.Requests;
+using Business.Dtos.UserOperationClaim.Responses;
 using Core.DataAccess.Paging;
 
 namespace Business.Abstracts
@@ -10,6 +12,7 @@ namespace Business.Abstracts
         Task<Paginate<GetListOperationClaimResponse>> GetListAsync();
         Task<DeletedOperationClaimResponse> DeleteAsync(Guid operationClaimId);
         Task<UpdatedOperationClaimResponse> UpdateAsync(UpdateOperationClaimRequest updateOperationClaimRequest);
-        Task<GetOperationClaimResponse> GetAsync(Guid operationClaimId);
+        Task<GetOperationClaimResponse> GetByIdAsync(Guid operationClaimId);
+        Task<CreatedUserOperationClaimResponse> AssignOperationClaimToUserAsync(CreateUserOperationClaimRequest createUserOperationClaimRequest);
     }
 }

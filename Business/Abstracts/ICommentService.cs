@@ -1,4 +1,6 @@
-﻿using Business.Dtos.Comment.Requests;
+﻿using Business.Dtos.Assignment.Requests;
+using Business.Dtos.Assignment.Responses;
+using Business.Dtos.Comment.Requests;
 using Business.Dtos.Comment.Responses;
 using Core.DataAccess.Paging;
 using System;
@@ -12,8 +14,9 @@ namespace Business.Abstracts
     public interface ICommentService
     {
         Task<CreatedCommentResponse> AddAsync(CreateCommentRequest createCommentRequest);
-        Task<Paginate<GetListCommentResponse>> GetListAsync();
+        Task<UpdatedCommentResponse> UpdateAsync(UpdateCommentRequest updateCommentRequest);
         Task<DeletedCommentResponse> DeleteAsync(Guid commentId);
+        Task<Paginate<GetListCommentResponse>> GetListAsync();
         Task<GetCommentResponse> GetByIdAsync(Guid commentId);
     }
 }
