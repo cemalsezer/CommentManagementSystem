@@ -51,20 +51,36 @@ namespace Business.Concretes
             return _mapper.Map<GetByIdUserResponse>(user);
 
         }
-
-
-        public async Task<Paginate<GetListUserResponse>> GetListAsync()
-        {
-            var data = await _userDal.GetListAsync();
-            return _mapper.Map<Paginate<GetListUserResponse>>(data);
-        }
-
         public async Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest)
         {
             User user = _mapper.Map<User>(updateUserRequest);
             var updatedUser = await _userDal.UpdateAsync(user);
             UpdatedUserResponse updatedUserResponse = _mapper.Map<UpdatedUserResponse>(updatedUser);
             return updatedUserResponse;
+        }
+
+        public async Task<Paginate<GetListUserResponse>> GetListAsync()
+        {
+            var data = await _userDal.GetListAsync();
+            return _mapper.Map<Paginate<GetListUserResponse>>(data);
+        }
+        public async Task<GetUserResponse> GetUserByMailAsync(string mail)
+        {
+            var userResult = await _userDal.GetAsync(u => u.Email == mail);
+            return _mapper.Map<GetUserResponse>(userResult);
+        }
+        public async Task<User> GetByMailAsync(string mail, bool withDeleted)
+        {
+            var result = await _userDal.GetAsync(u => u.Email == mail, withDeleted: withDeleted);
+            return result;
+        }
+
+
+        public List<IOperationClaim> GetClaims(IUser user)
+        {
+            var result = _userDal.GetClaims(user);
+            return result;
+
         }
     }
 }

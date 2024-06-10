@@ -4,6 +4,8 @@ using Business.Dtos.Assignment.Requests;
 using Business.Dtos.Assignment.Responses;
 using Business.Dtos.Comment.Requests;
 using Business.Dtos.Comment.Responses;
+using Business.Dtos.OperationClaim.Requests;
+using Business.Dtos.OperationClaim.Responses;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -28,10 +30,10 @@ namespace Business.Concretes
         }
         public async Task<CreatedCommentResponse> AddAsync(CreateCommentRequest createCommentRequest)
         {
-            Comment comment = _mapper.Map<Comment>(createCommentRequest);
-            comment.Id = Guid.NewGuid();
-            Comment createdComment = await _commentDal.AddAsync(comment);
-            return _mapper.Map<CreatedCommentResponse>(createCommentRequest);
+            var comment = _mapper.Map<Comment>(createCommentRequest);
+            var createdCommentResponse = await _commentDal.AddAsync(comment);
+            return _mapper.Map<CreatedCommentResponse>(comment);
+
         }
 
         public async Task<DeletedCommentResponse> DeleteAsync(Guid commentId)
@@ -54,6 +56,12 @@ namespace Business.Concretes
             return _mapper.Map<Paginate<GetListCommentResponse>>(commenttList);
         }
 
-    
+        public async Task<UpdatedCommentResponse> UpdateAsync(UpdateCommentRequest updateCommentRequest)
+        {
+            Comment comment = await _commentDal.GetAsync(p => p.Id == updateCommentRequest.Id);
+            _mapper.Map(updateCommentRequest, comment);
+            comment = await _commentDal.UpdateAsync(comment);
+            return _mapper.Map<UpdatedCommentResponse>(comment);
+        }
     }
 }

@@ -13,7 +13,6 @@ namespace Business.Dtos.Comment.Responses
 
 
         public string Content { get; set; }
-
         public DateTime CommentDate { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Dtos.UserOperationClaim.Requests
 {
-    public class GetUserAssignmentRequest
+    public class GetUserOperationClaimRequest
     {
         public Guid UserId { get; set; }
         public Guid OperationId { get; set; }

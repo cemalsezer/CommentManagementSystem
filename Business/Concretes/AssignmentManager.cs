@@ -2,6 +2,8 @@
 using Business.Abstracts;
 using Business.Dtos.Assignment.Requests;
 using Business.Dtos.Assignment.Responses;
+using Business.Dtos.OperationClaim.Requests;
+using Business.Dtos.OperationClaim.Responses;
 using Business.Dtos.User.Requests;
 using Business.Dtos.User.Responses;
 using Core.DataAccess.Paging;
@@ -54,6 +56,13 @@ namespace Business.Concretes
             return _mapper.Map<Paginate<GetListAssignmentResponse>>(assignmentList);
         }
 
-      
+        public async Task<UpdatedAssignmentResponse> UpdateAsync(UpdateAssignmentRequest updateAssignmentRequest)
+        {
+            Assignment assignment = await _assignmentDal.GetAsync(p => p.Id == updateAssignmentRequest.Id);
+            _mapper.Map(updateAssignmentRequest, assignment);
+            assignment = await _assignmentDal.UpdateAsync(assignment);
+            return _mapper.Map<UpdatedAssignmentResponse>(assignment);
+
+        }
     }
 }

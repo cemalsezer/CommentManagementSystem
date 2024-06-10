@@ -3,6 +3,8 @@ using Business.Abstracts;
 using Business.Dtos.OperationClaim.Requests;
 using Business.Dtos.OperationClaim.Responses;
 using Business.Dtos.User.Responses;
+using Business.Dtos.UserOperationClaim.Requests;
+using Business.Dtos.UserOperationClaim.Responses;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -35,6 +37,11 @@ namespace Business.Concretes
             return result;
         }
 
+        public async Task<CreatedUserOperationClaimResponse> AssignOperationClaimToUserAsync(CreateUserOperationClaimRequest createUserOperationClaimRequest)
+        {
+            return await _userOperationClaimService.AddAsync(createUserOperationClaimRequest);
+        }
+
         public async Task<DeletedOperationClaimResponse> DeleteAsync(Guid operationClaimId)
         {
             OperationClaim operationClaim = await _operationClaimDal.GetAsync(u => u.Id == operationClaimId);
@@ -43,7 +50,7 @@ namespace Business.Concretes
             return deletedOperationClaimResponse;
         }
 
-        public async Task<GetOperationClaimResponse> GetAsync(Guid operationClaimId)
+        public async Task<GetOperationClaimResponse> GetByIdAsync(Guid operationClaimId)
         {
             OperationClaim operationClaim = await _operationClaimDal.GetAsync(oc => oc.Id == operationClaimId);
             return _mapper.Map<GetOperationClaimResponse>(operationClaim);
