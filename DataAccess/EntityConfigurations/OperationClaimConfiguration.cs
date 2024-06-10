@@ -20,7 +20,6 @@ namespace DataAccess.EntityConfigurations
 
             builder.HasQueryFilter(op => !op.DeletedDate.HasValue);
 
-            builder.HasMany(op => op.UserOperationClaims).WithOne(uc => uc.OperationClaim).HasForeignKey(uc => uc.OperationClaimId);
         }
     }
 }

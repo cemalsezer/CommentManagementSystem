@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concretes
 {
-    public class EfUserAssignmentDal : EfRepositoryBase<UserOperationClaim, Guid, CommentManagemenContext>, IUserOperationClaimDal
+    public class EfUserAssignmentDal : EfRepositoryBase<UserAssignment, Guid, CommentManagemenContext>, IUserAssignmentDal
     {
         public EfUserAssignmentDal(CommentManagemenContext commentManagemenContext) : base(commentManagemenContext)
         {

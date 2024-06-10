@@ -1,12 +1,8 @@
-﻿using Castle.Core.Configuration;
+﻿//using Castle.Core.Configuration;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Contexts
 {
@@ -15,7 +11,7 @@ namespace DataAccess.Contexts
         protected IConfiguration Configuration { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments{ get; set; }
-        public DbSet<Assignment> Assignments{ get; set; }
+        public DbSet<Assignment> Assignments{ get; set; }   
         public DbSet<OperationClaim> OperationClaims{ get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims{ get; set; }
         public DbSet<UserAssignment> UserAssignments { get; set; }

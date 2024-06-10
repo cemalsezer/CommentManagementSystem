@@ -20,6 +20,7 @@ namespace DataAccess.EntityConfigurations
             builder.Property(uo => uo.AssignmentId).HasColumnName("AssignmentId").IsRequired();
 
             builder.HasOne(uo => uo.User).WithMany(u => u.UserAssignments).HasForeignKey(uo => uo.UserId);
+            builder.HasOne(uo => uo.Assignment).WithMany(u => u.UserAssignments).HasForeignKey(uo => uo.AssignmentId);
 
             builder.HasQueryFilter(u => !u.DeletedDate.HasValue);
         }

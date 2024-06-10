@@ -22,8 +22,7 @@ namespace DataAccess.Concretes
             _commentManagemenContext = commentManagemenContext;
         }
 
-
-        public List<IOperationClaim> GetOperationClaims(IUser user)
+        public List<IOperationClaim> GetClaims(IUser user)
         {
             var result = from operationClaim in _commentManagemenContext.OperationClaims
                          join userOperationClaim in _commentManagemenContext.UserOperationClaims

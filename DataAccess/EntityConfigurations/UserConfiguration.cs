@@ -11,6 +11,7 @@ namespace DataAccess.EntityConfigurations
         {
             builder.ToTable("Users").HasKey(u => u.Id);
 
+            builder.HasIndex(u => u.Email, "UK_Users_Email").IsUnique();
 
             builder.Property(u => u.Id).HasColumnName("Id").IsRequired();
             builder.Property(u => u.FirstName).HasColumnName("FirstName").IsRequired();
@@ -18,6 +19,9 @@ namespace DataAccess.EntityConfigurations
             builder.Property(u => u.Email).HasColumnName("Email").IsRequired();
             builder.Property(u => u.PasswordHash).HasColumnName("PasswordHash").IsRequired();
             builder.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt").IsRequired();
+
+            builder.HasQueryFilter(u => !u.DeletedDate.HasValue);
+
         }
     }
 }

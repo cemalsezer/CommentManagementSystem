@@ -20,6 +20,8 @@ namespace DataAccess.EntityConfigurations
             builder.Property(uo => uo.OperationClaimId).HasColumnName("OperationClaimId").IsRequired();
 
             builder.HasOne(uo => uo.User).WithMany(u => u.UserOperationClaims).HasForeignKey(uo => uo.UserId);
+            builder.HasOne(uo => uo.OperationClaim).WithMany(u => u.UserOperationClaims).HasForeignKey(uo => uo.OperationClaimId);
+
 
             builder.HasQueryFilter(u => !u.DeletedDate.HasValue);
         }

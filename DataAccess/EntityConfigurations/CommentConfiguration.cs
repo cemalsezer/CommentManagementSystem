@@ -17,7 +17,6 @@ namespace DataAccess.EntityConfigurations
 
             builder.Property(op => op.Id).HasColumnName("Id").IsRequired();
             builder.Property(op => op.AssignmentId).HasColumnName("AssignmentId").IsRequired();
-            builder.Property(op => op.UserId).HasColumnName("UserId").IsRequired();
             builder.Property(op => op.Content).HasColumnName("Content").IsRequired();
             builder.Property(op => op.CommentDate).HasColumnName("CommentDate").IsRequired();
 
