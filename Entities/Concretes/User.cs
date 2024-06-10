@@ -17,7 +17,6 @@ namespace Entities.Concretes
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; } 
         public ICollection<UserAssignment> UserAssignments { get; set; }
-
         public ICollection<UserOperationClaim> UserOperationClaims{ get; set; }
     }
 }
