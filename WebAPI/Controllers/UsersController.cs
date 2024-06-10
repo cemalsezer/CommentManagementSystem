@@ -10,15 +10,52 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        [HttpGet]
-        public string Test()
+        IUserService _userService;
+        public UsersController(IUserService userService)
         {
-            return "HELLO";
+            _userService = userService;
         }
-       
 
+        [HttpPost("Add")]
+        public async Task<IActionResult> AddAsync([FromBody] CreateUserRequest createUserRequest)
+        {
+            var result = await _userService.AddAsync(createUserRequest);
+            return Ok(result);
+        }
 
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateAsync([FromBody] UpdateUserRequest updateUserRequest)
+        {
+            var result = await _userService.UpdateAsync(updateUserRequest);
+            return Ok(result);
+        }
 
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> DeleteAsync([FromQuery] Guid userId)
+        {
+            var result = await _userService.DeleteAsync(userId);
+            return Ok(result);
+        }
 
+        [HttpGet("GetList")]
+        public async Task<IActionResult> GetListAsync()
+        {
+            var result = await _userService.GetListAsync();
+            return Ok(result);
+        }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync([FromQuery] Guid userId)
+        {
+            var result = await _userService.GetByIdAsync(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("GetUserByMail")]
+        public async Task<IActionResult> GetUserByMailAsync([FromQuery] string email)
+        {
+            var result = await _userService.GetUserByMailAsync(email);
+            return Ok(result);
+        }
     }
 }
